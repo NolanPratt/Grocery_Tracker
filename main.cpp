@@ -118,7 +118,7 @@ int callIntFunc(string proc, string param)
 	pFunc = PyDict_GetItemString(pDict, procname);
 	if (PyCallable_Check(pFunc))
 	{
-		pValue = Py_BuildValue("(z)", paramval);
+		pValue = Py_BuildValue("(z)", param);
 		PyErr_Print();
 		presult = PyObject_CallObject(pFunc, pValue);
 		PyErr_Print();
@@ -259,11 +259,11 @@ int main() {
 		userSelection = callIntFunc("CppInterface", userSelection);
 
 		string userName;
-		int itemNum;
+		int itemNum = -1;
 		// Conditional to check user selection from Python return value
 		switch (userSelection)
 		{
-			// Prompt for single item and display frequency
+		// Prompt for single item and display frequency
 		case (2):
 			// Prompt user to enter desired item
 			cout << "Enter an item name to view its purchase history: " << endl;
@@ -272,7 +272,7 @@ int main() {
 			itemNum = callIntFunc("CppDisplaySingle", userName);
 			cout << "The total number of " << userName << " sold today is " << itemNum << "." << endl;
 
-			// Interpret Fequency.dat file created from Python function
+		// Interpret Fequency.dat file created from Python function
 		case (3):
 			// Read in Frequency.dat lines
 			GatherFileLines freqFile;
